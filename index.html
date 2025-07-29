@@ -1,96 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FlipFeel – Dual Mood Answers</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom right, #1a1a1a, #3a3a3a);
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem;
-    }
-
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .subheading {
-      color: #ccc;
-      font-size: 1rem;
-      margin-bottom: 2rem;
-      text-align: center;
-    }
-
-    input, button {
-      padding: 0.8rem;
-      font-size: 1rem;
-      border-radius: 8px;
-      border: none;
-      outline: none;
-    }
-
-    input {
-      width: 90%;
-      max-width: 500px;
-      margin-bottom: 1rem;
-    }
-
-    button {
-      background: #ff4757;
-      color: white;
-      cursor: pointer;
-      margin-bottom: 2rem;
-    }
-
-    .answer-box {
-      width: 90%;
-      max-width: 600px;
-      background: #2f2f2f;
-      border-radius: 10px;
-      padding: 1rem;
-      margin: 1rem 0;
-      box-shadow: 0 0 10px rgba(255,255,255,0.05);
-    }
-
-    .type {
-      font-weight: bold;
-      color: #ffa502;
-    }
-  </style>
+  <title>FlipFeel - Feel It</title>
 </head>
-<body>
-  <h1>FlipFeel 💔❤️‍🩹</h1>
-  <div class="subheading">One question. Two answers. Feel both sides.</div>
-
-  <input type="text" id="questionInput" placeholder="Type your question here...">
-  <button onclick="showAnswers()">Get Answers</button>
-
-  <div id="answersContainer"></div>
+<body style="text-align:center; font-family:sans-serif;">
+  <h1>💔 FlipFeel 💭</h1>
+  <p>Apna dil ka sawaal likho...</p>
+  
+  <input type="text" id="userQuestion" placeholder="Type your pain here..." style="width:70%; padding:10px;">
+  <br><br>
+  <button onclick="showVideo()">Submit</button>
+  
+  <div id="videoContainer" style="margin-top:30px;"></div>
 
   <script>
-    function showAnswers() {
-      const q = document.getElementById("questionInput").value.trim();
-      if (!q) return alert("Please type a question!");
+    function showVideo() {
+      const q = document.getElementById('userQuestion').value.toLowerCase();
+      let video = 'videos/default.mp4';
 
-      const harsh = `💔 Harsh Reality: "${q}" ka jawab sirf takleef deta hai, par sach yahi hai – sab wapas nahi aata.`;
-      const healing = `❤️‍🩹 Healing Answer: "${q}" ka dard waqt ke sath kam ho jaata hai, aur tum phir se muskuraoge.`;
+      if (q.includes('chod') || q.includes('usne') || q.includes('breakup')) {
+        video = 'videos/breakup.mp4';
+      } else if (q.includes('akela') || q.includes('yaad') || q.includes('alone')) {
+        video = 'videos/lonely.mp4';
+      } else if (q.includes('motivate') || q.includes('himmat') || q.includes('karna')) {
+        video = 'videos/motivation.mp4';
+      } else if (q.includes('sad') || q.includes('hurt') || q.includes('dard')) {
+        video = 'videos/healing.mp4';
+      }
 
-      document.getElementById("answersContainer").innerHTML = `
-        <div class="answer-box">
-          <div class="type">Harsh 💔:</div>
-          <div>${harsh}</div>
-        </div>
-        <div class="answer-box">
-          <div class="type">Healing ❤️‍🩹:</div>
-          <div>${healing}</div>
-        </div>
+      document.getElementById('videoContainer').innerHTML = `
+        <video width="320" height="180" controls autoplay muted>
+          <source src="${video}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
       `;
     }
   </script>
