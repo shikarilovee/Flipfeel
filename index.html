@@ -1,39 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>FlipFeel - Feel It</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FlipFeel</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: linear-gradient(to right, #000000, #434343);
+      color: white;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 1rem;
+      margin: 10px 0;
+      width: 80%;
+      max-width: 400px;
+      border-radius: 10px;
+      border: none;
+    }
+    .answer-box {
+      margin-top: 30px;
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 20px;
+    }
+    .harsh {
+      color: #ff4c4c;
+      margin-top: 10px;
+    }
+    .healing {
+      color: #4cff9a;
+      margin-top: 10px;
+    }
+  </style>
 </head>
-<body style="text-align:center; font-family:sans-serif;">
-  <h1>💔 FlipFeel 💭</h1>
-  <p>Apna dil ka sawaal likho...</p>
-  
-  <input type="text" id="userQuestion" placeholder="Type your pain here..." style="width:70%; padding:10px;">
-  <br><br>
-  <button onclick="showVideo()">Submit</button>
-  
-  <div id="videoContainer" style="margin-top:30px;"></div>
+<body>
+  <h1>FlipFeel</h1>
+  <p>Ask anything that's on your heart ❤️</p>
+
+  <input id="question" placeholder="Type your question..." />
+  <br>
+  <button onclick="showAnswer()">Flip My Feelings</button>
+
+  <div class="answer-box" id="answers" style="display:none;">
+    <div class="harsh" id="harshAnswer"></div>
+    <div class="healing" id="healingAnswer"></div>
+  </div>
 
   <script>
-    function showVideo() {
-      const q = document.getElementById('userQuestion').value.toLowerCase();
-      let video = 'videos/default.mp4';
+    function showAnswer() {
+      const q = document.getElementById("question").value;
+      if (!q) return alert("Please ask a question!");
 
-      if (q.includes('chod') || q.includes('usne') || q.includes('breakup')) {
-        video = 'videos/breakup.mp4';
-      } else if (q.includes('akela') || q.includes('yaad') || q.includes('alone')) {
-        video = 'videos/lonely.mp4';
-      } else if (q.includes('motivate') || q.includes('himmat') || q.includes('karna')) {
-        video = 'videos/motivation.mp4';
-      } else if (q.includes('sad') || q.includes('hurt') || q.includes('dard')) {
-        video = 'videos/healing.mp4';
-      }
+      // Harsh & healing examples — future me database se aayenge
+      const harshReplies = [
+        "He/She never cared. You were just convenient.",
+        "Not everyone gets a happy ending.",
+        "You're not the problem — you're just not the priority.",
+      ];
 
-      document.getElementById('videoContainer').innerHTML = `
-        <video width="320" height="180" controls autoplay muted>
-          <source src="${video}" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-      `;
+      const healingReplies = [
+        "It hurts now, but you'll grow stronger through this.",
+        "The right people will never make you feel unwanted.",
+        "You're meant for bigger things. Hold on.",
+      ];
+
+      const harsh = harshReplies[Math.floor(Math.random() * harshReplies.length)];
+      const healing = healingReplies[Math.floor(Math.random() * healingReplies.length)];
+
+      document.getElementById("answers").style.display = "block";
+      document.getElementById("harshAnswer").innerHTML = "💔 Harsh: " + harsh;
+      document.getElementById("healingAnswer").innerHTML = "❤️‍🩹 Healing: " + healing;
     }
   </script>
 </body>
