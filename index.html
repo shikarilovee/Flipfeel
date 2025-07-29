@@ -1,84 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FlipFeel</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background: linear-gradient(to right, #000000, #434343);
-      color: white;
-      text-align: center;
-      padding: 30px;
-    }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-    }
-    input, button {
-      padding: 10px;
-      font-size: 1rem;
-      margin: 10px 0;
-      width: 80%;
-      max-width: 400px;
-      border-radius: 10px;
-      border: none;
-    }
-    .answer-box {
-      margin-top: 30px;
-      background: #1e1e1e;
-      padding: 20px;
-      border-radius: 20px;
-    }
-    .harsh {
-      color: #ff4c4c;
-      margin-top: 10px;
-    }
-    .healing {
-      color: #4cff9a;
-      margin-top: 10px;
-    }
-  </style>
-</head>
-<body>
-  <h1>FlipFeel</h1>
-  <p>Ask anything that's on your heart ❤️</p>
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-  <input id="question" placeholder="Type your question..." />
-  <br>
-  <button onclick="showAnswer()">Flip My Feelings</button>
+const Home = () => {
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    axios.get('http://localhost:5000/posts').then(res => setPosts(res.data));
+  }, []);
 
-  <div class="answer-box" id="answers" style="display:none;">
-    <div class="harsh" id="harshAnswer"></div>
-    <div class="healing" id="healingAnswer"></div>
-  </div>
+  return (
+    <div className="p-4 text-white">
+      <h2 className="text-2xl mb-4">All Posts</h2>
+      {posts.map(post => (
+        <div key={post._id} className="bg-gray-800 p-4 mb-4 rounded">
+          <h3 className="text-xl">{post.title}</h3>
+          <p>{post.content}</p>
+        </div>
+      ))}
+    </div>
+  );
+};
 
-  <script>
-    function showAnswer() {
-      const q = document.getElementById("question").value;
-      if (!q) return alert("Please ask a question!");
-
-      // Harsh & healing examples — future me database se aayenge
-      const harshReplies = [
-        "He/She never cared. You were just convenient.",
-        "Not everyone gets a happy ending.",
-        "You're not the problem — you're just not the priority.",
-      ];
-
-      const healingReplies = [
-        "It hurts now, but you'll grow stronger through this.",
-        "The right people will never make you feel unwanted.",
-        "You're meant for bigger things. Hold on.",
-      ];
-
-      const harsh = harshReplies[Math.floor(Math.random() * harshReplies.length)];
-      const healing = healingReplies[Math.floor(Math.random() * healingReplies.length)];
-
-      document.getElementById("answers").style.display = "block";
-      document.getElementById("harshAnswer").innerHTML = "💔 Harsh: " + harsh;
-      document.getElementById("healingAnswer").innerHTML = "❤️‍🩹 Healing: " + healing;
-    }
-  </script>
-</body>
-</html>
+export default Home;
